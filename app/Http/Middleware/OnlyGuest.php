@@ -17,7 +17,7 @@ class OnlyGuest
     public function handle(Request $request, Closure $next)
     {
         if ($request->session()->get('user_uuid')) {
-            return redirect('/feed/');
+            return redirect('/feedx/');
         }
         return $next($request);
     }

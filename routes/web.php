@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FeedController;
 use App\Http\Controllers\HomeController;
 
 // HomeController
@@ -11,3 +12,9 @@ Route::post('/register', [HomeController::class, 'register_save'])->middleware('
 
 Route::get('/login', [HomeController::class, 'login'])->middleware('onlyGuest');
 Route::post('/login', [HomeController::class, 'login_save'])->middleware('onlyGuest');
+
+Route::get('/logout', [HomeController::class, 'logout']);
+
+
+// FeedController
+Route::get('/feedx', [FeedController::class, 'feed']);

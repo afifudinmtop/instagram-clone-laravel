@@ -52,7 +52,8 @@ class HomeController extends Controller
             'username' => $username,
             'password' => $password,
             'first_name' => $first_name,
-            'last_name' => $last_name
+            'last_name' => $last_name,
+            'image' => 'default.png'
         ]);
 
         // redirect with success message
@@ -102,6 +103,12 @@ class HomeController extends Controller
         $request->session()->put('user_uuid', $user[0]->uuid);
 
         // all good
-        return redirect('/feed');
+        return redirect('/feedx');
+    }
+
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+        return redirect('/login/');
     }
 }
