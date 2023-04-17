@@ -42,24 +42,21 @@
       </a>
       <div class="d-flex justify-content-between my-auto">
         <!-- form input image -->
-        <form
-          action="/add_middleware"
-          method="post"
-          enctype="multipart/form-data"
-        >
-          <input
-            id="file"
-            type="file"
-            name="file"
-            class="d-none"
-            accept="image/*"
-            onchange="document.getElementById('button_submit').click()"
-          />
-          <button id="button_submit" type="submit" class="d-none"></button>
-          <div
-            class="logo_add"
-            onclick="document.getElementById('file').click()"
-          ></div>
+        <form action="/add" method="post" enctype="multipart/form-data">
+            @csrf
+            <input
+                id="file"
+                type="file"
+                name="file"
+                class="d-none"
+                accept="image/*"
+                onchange="document.getElementById('button_submit').click()"
+            />
+            <button id="button_submit" type="submit" class="d-none"></button>
+            <div
+                class="logo_add"
+                onclick="document.getElementById('file').click()"
+            ></div>
         </form>
 
         <a class="text-decoration-none" href="/notif/">

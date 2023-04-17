@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class FeedController extends Controller
 {
@@ -55,6 +57,43 @@ class FeedController extends Controller
             'list_post' => $list_post,
             'profil' => $profil,
         ]);
-        return $profil;
+    }
+
+    public function add_post(Request $request)
+    {
+        // assign
+        $user_uuid = $request->session()->get('user_uuid');
+
+        // compress then upload
+        $filename = uniqid() . '.jpg';
+        $img = Image::make($request->file('file'))->fit(370)->encode('jpg');
+        Storage::put('public/uploads/' . $filename, $img);
+
+        return redirect('/add')->with('image', $filename);
+    }
+
+    public function add()
+    {
+        return view('feed/add');
+    }
+
+    public function add_save(Request $request)
+    {
+        // assign
+        $user_uuid = $request->session()->get('user_uuid');
+        $caption = $request->input('caption');
+        $image = $request->input('image');
+        $uuid_post = uniqid();
+
+        // insert to db
+        DB::table('post')->insert([
+            'uuid' => $uuid_post,
+            'user' => $user_uuid,
+            'image' => $image,
+            'caption' => $caption
+        ]);
+        // end insert
+
+        return redirect('/post_detail/?uuid='.$uuid_post);
     }
 }

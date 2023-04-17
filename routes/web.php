@@ -18,3 +18,6 @@ Route::get('/logout', [HomeController::class, 'logout']);
 
 // FeedController
 Route::get('/feedx', [FeedController::class, 'feed']);
+Route::post('/add', [FeedController::class, 'add_post']);
+Route::get('/add', [FeedController::class, 'add']);
+Route::post('/add_save', [FeedController::class, 'add_save']);
