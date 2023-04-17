@@ -35,6 +35,17 @@ class HomeController extends Controller
         $last_name = $request->input('last_name');
         $password = Hash::make($request->input('password'));
 
+        // cek user exist
+        $exist = DB::table('user')
+                ->where('username', '=', $username)
+                ->limit(1)
+                ->count();
+                
+        // user already exist
+        if ($exist) {
+            return back()->with('error', 'user already exist!');
+        }
+
         // insert to db
         DB::table('user')->insert([
             'uuid' => $uuid,
