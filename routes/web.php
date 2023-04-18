@@ -26,5 +26,9 @@ Route::post('/add_save', [FeedController::class, 'add_save']);
 Route::post('/likes', [FeedController::class, 'likes']);
 Route::post('/dislike', [FeedController::class, 'dislike']);
 
+Route::post('/saved', [FeedController::class, 'saved']);
+Route::post('/unsaved', [FeedController::class, 'unsaved']);
+
+
 // ProfilController
 Route::get('/post_detail/{uuid_post}', [ProfilController::class, 'post_detail']);

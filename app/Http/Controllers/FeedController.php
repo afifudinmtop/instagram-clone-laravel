@@ -129,4 +129,37 @@ class FeedController extends Controller
 
         return 'ok';
     }
+
+    public function saved(Request $request)
+    {
+        // assign
+        $user_uuid = $request->session()->get('user_uuid');
+        $uuid_post = $request->input('uuid_post');
+        $uuid_likes = uniqid();
+
+        // insert to db
+        DB::table('saved')->insert([
+            'uuid' => $uuid_likes,
+            'user' => $user_uuid,
+            'post' => $uuid_post
+        ]);
+        // end insert
+
+        return 'ok';
+    }
+
+    public function unsaved(Request $request)
+    {
+        // assign
+        $user_uuid = $request->session()->get('user_uuid');
+        $uuid_post = $request->input('uuid_post');
+
+        DB::table('saved')
+            ->where('user', '=', $user_uuid)
+            ->where('post', '=', $uuid_post)
+            ->delete();
+        // end delete
+
+        return 'ok';
+    }
 }

@@ -117,7 +117,7 @@
                 </div>
 
                 <img
-                id="saved_<%= x.uuid %>"
+                id="saved_{{ $x->uuid }}"
                 class="apip_pointer"
                 onclick="saved('{{ $x->uuid }}')"
                 src="/img/{{ $x->saved_status }}"
@@ -208,6 +208,7 @@
 
       // middleware saved
       function saved(uuid_post) {
+        let token = document.querySelector('meta[name="csrf-token"]').content;
         let data_upload = new FormData();
         data_upload.append("uuid_post", uuid_post);
 
@@ -223,6 +224,7 @@
               "/img/saved.png";
           };
           xhttp.open("POST", "/unsaved", true);
+          xhttp.setRequestHeader('X-CSRF-TOKEN', token);
           xhttp.send(data_upload);
         }
         // saved
@@ -233,6 +235,7 @@
               "/img/unsaved.png";
           };
           xhttp.open("POST", "/saved", true);
+          xhttp.setRequestHeader('X-CSRF-TOKEN', token);
           xhttp.send(data_upload);
         }
       }
