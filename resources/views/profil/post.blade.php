@@ -33,6 +33,7 @@
     />
 
     <link rel="stylesheet" href="/profil/post.css" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
   </head>
   <body class="mx-auto">
     <!-- nav header -->
@@ -166,7 +167,7 @@
       <a class="text-decoration-none" href="/message/">
         <img src="/img/message.png" width="24px" height="24px" />
       </a>
-      <a class="text-decoration-none" href="/profil/">
+      <a class="text-decoration-none" href="/profile/">
         <img class="profil_img my-auto" src="/storage/uploads/{{ $profil[0]->image }}" />
       </a>
     </div>
@@ -174,6 +175,7 @@
     <script>
       // middleware likes
       function likes(uuid_post) {
+        let token = document.querySelector('meta[name="csrf-token"]').content;
         let data_upload = new FormData();
         data_upload.append("uuid_post", uuid_post);
 
@@ -188,6 +190,7 @@
             document.getElementById(`likes_${uuid_post}`).src = "/img/love.png";
           };
           xhttp.open("POST", "/dislike", true);
+          xhttp.setRequestHeader('X-CSRF-TOKEN', token);
           xhttp.send(data_upload);
         }
         // like
@@ -198,6 +201,7 @@
               "/img/lovex.png";
           };
           xhttp.open("POST", "/likes", true);
+          xhttp.setRequestHeader('X-CSRF-TOKEN', token);
           xhttp.send(data_upload);
         }
       }

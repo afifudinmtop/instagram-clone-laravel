@@ -158,7 +158,7 @@
       <a class="text-decoration-none" href="/message/">
         <img src="/img/message.png" width="24px" height="24px" />
       </a>
-      <a class="text-decoration-none" href="/profil/">
+      <a class="text-decoration-none" href="/profile/">
         <img class="profil_img my-auto" src="/storage/uploads/{{ $profil[0]->image }}" />
       </a>
     </div>

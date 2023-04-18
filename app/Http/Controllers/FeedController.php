@@ -96,4 +96,37 @@ class FeedController extends Controller
 
         return redirect('/post_detail/?uuid='.$uuid_post);
     }
+
+    public function likes(Request $request)
+    {
+        // assign
+        $user_uuid = $request->session()->get('user_uuid');
+        $uuid_post = $request->input('uuid_post');
+        $uuid_likes = uniqid();
+
+        // insert to db
+        DB::table('likes')->insert([
+            'uuid' => $uuid_likes,
+            'user' => $user_uuid,
+            'post' => $uuid_post
+        ]);
+        // end insert
+
+        return 'ok';
+    }
+
+    public function dislike(Request $request)
+    {
+        // assign
+        $user_uuid = $request->session()->get('user_uuid');
+        $uuid_post = $request->input('uuid_post');
+
+        DB::table('likes')
+            ->where('user', '=', $user_uuid)
+            ->where('post', '=', $uuid_post)
+            ->delete();
+        // end delete
+
+        return 'ok';
+    }
 }

@@ -23,5 +23,8 @@ Route::post('/add', [FeedController::class, 'add_post']);
 Route::get('/add', [FeedController::class, 'add']);
 Route::post('/add_save', [FeedController::class, 'add_save']);
 
+Route::post('/likes', [FeedController::class, 'likes']);
+Route::post('/dislike', [FeedController::class, 'dislike']);
+
 // ProfilController
 Route::get('/post_detail/{uuid_post}', [ProfilController::class, 'post_detail']);
