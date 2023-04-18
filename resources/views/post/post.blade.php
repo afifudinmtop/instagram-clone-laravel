@@ -70,13 +70,13 @@
 
             <!-- Modal -->
             <div class="modal fade" id="modalx" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-dialog modal-dialog-centered m-auto">
                 <div class="modal-content">
                     <div class="modal-body p-0">
-                    <a href="/delete/?uuid={{ $x->uuid }}" class="button_delete py-2">
+                    <a href="/delete/{{ $x->uuid }}" class="button_delete py-2">
                         Delete
                     </a>
-                    <a href="/edit/?uuid={{ $x->uuid }}" class="button_edit py-2">
+                    <a href="/edit/{{ $x->uuid }}" class="button_edit py-2">
                         Edit
                     </a>
                     <a href="#" class="button_edit py-2" data-bs-dismiss="modal">

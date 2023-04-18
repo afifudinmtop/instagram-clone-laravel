@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfilController;
 
 // HomeController
@@ -17,18 +18,24 @@ Route::post('/login', [HomeController::class, 'login_save'])->middleware('onlyGu
 Route::get('/logout', [HomeController::class, 'logout']);
 
 
+
 // FeedController
 Route::get('/feedx', [FeedController::class, 'feed']);
 Route::post('/add', [FeedController::class, 'add_post']);
 Route::get('/add', [FeedController::class, 'add']);
 Route::post('/add_save', [FeedController::class, 'add_save']);
 
-Route::post('/likes', [FeedController::class, 'likes']);
-Route::post('/dislike', [FeedController::class, 'dislike']);
-
-Route::post('/saved', [FeedController::class, 'saved']);
-Route::post('/unsaved', [FeedController::class, 'unsaved']);
 
 
-// ProfilController
-Route::get('/post_detail/{uuid_post}', [ProfilController::class, 'post_detail']);
+// PostController
+Route::get('/post_detail/{uuid_post}', [PostController::class, 'post_detail']);
+
+Route::post('/likes', [PostController::class, 'likes']);
+Route::post('/dislike', [PostController::class, 'dislike']);
+
+Route::post('/saved', [PostController::class, 'saved']);
+Route::post('/unsaved', [PostController::class, 'unsaved']);
+
+Route::get('/delete/{uuid_post}', [PostController::class, 'delete']);
+Route::get('/edit/{uuid_post}', [PostController::class, 'edit']);
+Route::post('/edit/', [PostController::class, 'edit_save']);
