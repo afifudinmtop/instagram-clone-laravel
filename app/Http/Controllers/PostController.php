@@ -157,4 +157,32 @@ class PostController extends Controller
 
         return redirect('/post_detail/'.$post_uuid);
     }
+
+    public function list_like(Request $request, $uuid_post)
+    {
+        $user_uuid = $request->session()->get('user_uuid');
+
+        // profil querry
+        $profil = DB::table('user')
+                    ->where('uuid', '=', $user_uuid)
+                    ->limit(1)
+                    ->get();
+        // end profil querry
+
+        // list_like querry
+        $list_like = DB::table('likes')
+                    ->join('user', 'likes.user', '=', 'user.uuid')
+                    ->select('likes.post', 'likes.user', 'user.username', 'user.image', 'user.first_name', 'user.last_name')
+                    ->where('likes.post', '=', $uuid_post)
+                    ->get();
+        // end list_like querry
+
+        // return $data;
+
+        return view('post/list_like', [
+            'list_like' => $list_like,
+            'profil' => $profil,
+        ]);
+    
+    }
 }

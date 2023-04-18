@@ -49,7 +49,7 @@
         @foreach ($data as $x)
             <!-- post head -->
             <div class="d-flex justify-content-between p-3">
-                <a href="/user/?uuid={{ $x->user }}" class="text-decoration-none">
+                <a href="/user/{{ $x->user }}" class="text-decoration-none">
                     <div class="d-flex">
                         <img class="user_img my-auto" src="/storage/uploads/{{ $x->user_image }}" />
                         <span class="user_username my-auto ms-2">{{ $x->username }}</span>
@@ -107,7 +107,7 @@
 
                 <a
                     class="text-decoration-none me-3"
-                    href="/post_comment/?uuid={{ $x->uuid }}"
+                    href="/post_comment/{{ $x->uuid }}"
                 >
                     <img src="/img/comment.png" width="22px" height="22px" />
                 </a>
@@ -127,20 +127,20 @@
             </div>
 
             <!-- post likes -->
-            <a class="text-decoration-none" href="/post_like/?uuid={{ $x->uuid }}">
+            <a class="text-decoration-none" href="/list_like/{{ $x->uuid }}">
                 <div class="post_like px-3 pt-2">{{ $x->like_count }} likes</div>
             </a>
 
             <!-- post caption -->
             <div class="post_caption px-3 pt-1">
-                <a class="text-decoration-none" href="/user/?uuid={{ $x->user }}">
+                <a class="text-decoration-none" href="/user/{{ $x->user }}">
                 <span class="post_caption_username">{{ $x->username }} </span></a
                 >
                 <span class="post_caption_body">{{ $x->caption }}</span>
             </div>
 
             <!-- post comment -->
-            <a class="text-decoration-none" href="/post_comment/?uuid={{ $x->uuid }}">
+            <a class="text-decoration-none" href="/post_comment/{{ $x->uuid }}">
                 <div class="post_comment px-3 pt-1">
                 view all {{ $x->comment_count }} comments
                 </div>
@@ -155,7 +155,7 @@
 
     <!-- nav footer -->
     <div class="d-flex justify-content-between py-2 px-4 footer my-auto">
-      <a class="text-decoration-none" href="/feed/">
+      <a class="text-decoration-none" href="/feedx/">
         <img src="/img/home_selected.png" width="24px" height="24px" />
       </a>
       <a class="text-decoration-none" href="/search_feed/">

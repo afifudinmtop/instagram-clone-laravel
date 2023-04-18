@@ -39,3 +39,5 @@ Route::post('/unsaved', [PostController::class, 'unsaved']);
 Route::get('/delete/{uuid_post}', [PostController::class, 'delete']);
 Route::get('/edit/{uuid_post}', [PostController::class, 'edit']);
 Route::post('/edit/', [PostController::class, 'edit_save']);
+
+Route::get('/list_like/{uuid_post}', [PostController::class, 'list_like']);
