@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfilController;
 
 // HomeController
 Route::get('/', [HomeController::class, 'landing'])->middleware('onlyGuest');
@@ -21,3 +22,6 @@ Route::get('/feedx', [FeedController::class, 'feed']);
 Route::post('/add', [FeedController::class, 'add_post']);
 Route::get('/add', [FeedController::class, 'add']);
 Route::post('/add_save', [FeedController::class, 'add_save']);
+
+// ProfilController
+Route::get('/post_detail/{uuid_post}', [ProfilController::class, 'post_detail']);
