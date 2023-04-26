@@ -43,7 +43,7 @@
   <body class="mx-auto">
     <!-- search bar -->
     <div class="search_bar_parent p-2">
-      <a href="/search/" class="text-decoration-none">
+      <a href="/searchx/" class="text-decoration-none">
         <div class="search_bar text-center p-1 rounded">
           <i class="bi bi-search me-1"></i>Search
         </div></a

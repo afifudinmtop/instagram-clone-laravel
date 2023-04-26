@@ -49,3 +49,5 @@ Route::get('/delete_comment/{uuid_comment}', [PostController::class, 'delete_com
 
 // SearchController
 Route::get('/search_feed/', [SearchController::class, 'search_feed']);
+Route::get('/searchx/', [SearchController::class, 'search']);
+Route::post('/search_post/', [SearchController::class, 'search_post']);
