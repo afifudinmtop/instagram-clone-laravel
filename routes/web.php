@@ -5,6 +5,7 @@ use App\Http\Controllers\FeedController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\SearchController;
 
 // HomeController
 Route::get('/', [HomeController::class, 'landing'])->middleware('onlyGuest');
@@ -45,3 +46,6 @@ Route::post('/edit/', [PostController::class, 'edit_save']);
 Route::get('/comment/{uuid_post}', [PostController::class, 'list_comment']);
 Route::post('/comment/', [PostController::class, 'comment_save']);
 Route::get('/delete_comment/{uuid_comment}', [PostController::class, 'delete_comment']);
+
+// SearchController
+Route::get('/search_feed/', [SearchController::class, 'search_feed']);
