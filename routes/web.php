@@ -32,6 +32,7 @@ Route::get('/post_detail/{uuid_post}', [PostController::class, 'post_detail']);
 
 Route::post('/likes', [PostController::class, 'likes']);
 Route::post('/dislike', [PostController::class, 'dislike']);
+Route::get('/list_like/{uuid_post}', [PostController::class, 'list_like']);
 
 Route::post('/saved', [PostController::class, 'saved']);
 Route::post('/unsaved', [PostController::class, 'unsaved']);
@@ -40,4 +41,7 @@ Route::get('/delete/{uuid_post}', [PostController::class, 'delete']);
 Route::get('/edit/{uuid_post}', [PostController::class, 'edit']);
 Route::post('/edit/', [PostController::class, 'edit_save']);
 
-Route::get('/list_like/{uuid_post}', [PostController::class, 'list_like']);
+
+Route::get('/comment/{uuid_post}', [PostController::class, 'list_comment']);
+Route::post('/comment/', [PostController::class, 'comment_save']);
+Route::get('/delete_comment/{uuid_comment}', [PostController::class, 'delete_comment']);

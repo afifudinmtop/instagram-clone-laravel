@@ -177,12 +177,79 @@ class PostController extends Controller
                     ->get();
         // end list_like querry
 
-        // return $data;
-
         return view('post/list_like', [
             'list_like' => $list_like,
             'profil' => $profil,
         ]);
     
+    }
+
+    public function list_comment(Request $request, $uuid_post)
+    {
+        $user_uuid = $request->session()->get('user_uuid');
+
+        // profil querry
+        $profil = DB::table('user')
+                    ->where('uuid', '=', $user_uuid)
+                    ->limit(1)
+                    ->get();
+        // end profil querry
+
+        // list_like querry
+        $list_comment = DB::table('comment')
+                            ->select('comment.uuid', 'comment.user', 'comment.post', 'comment.comment', 'comment.ts', 'user.username', 'user.image')
+                            ->join('user', 'comment.user', '=', 'user.uuid')
+                            ->where('comment.post', '=', $uuid_post)
+                            ->whereNull('comment.hapus')
+                            ->get();
+        // end list_comment querry
+
+        // post querry
+        $post = DB::table('post')
+                    ->join('user', 'post.user', '=', 'user.uuid')
+                    ->select('post.uuid', 'post.user', 'post.image', 'post.caption', 'post.ts', 'user.username', 'user.image as user_image')
+                    ->where('post.uuid', $uuid_post)
+                    ->get();
+        // end post querry
+
+        // return $list_comment;
+        return view('post/list_comment', [
+            'list_comment' => $list_comment,
+            'profil' => $profil,
+            'post' => $post
+        ]);
+    
+    }
+
+    public function comment_save(Request $request)
+    {
+        $user_uuid = $request->session()->get('user_uuid');
+
+        $uuid_post = $request->input('uuid_post');
+        $comment = $request->input('comment');
+        $uuid_comment = uniqid();
+        
+        // insert to db
+        DB::table('comment')->insert([
+            'uuid' => $uuid_comment,
+            'user' => $user_uuid,
+            'post' => $uuid_post,
+            'comment' => $comment
+        ]);
+        // end insert
+
+        return redirect('/post_detail/'.$uuid_post);
+    }
+
+    public function delete_comment(Request $request, $uuid_comment)
+    {
+        $user_uuid = $request->session()->get('user_uuid');
+     
+        DB::table('comment')
+            ->where('user', $user_uuid)
+            ->where('uuid', $uuid_comment)
+            ->update(['hapus' => 'hapus']);
+        
+        return back();
     }
 }

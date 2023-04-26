@@ -107,7 +107,7 @@
 
                 <a
                     class="text-decoration-none me-3"
-                    href="/post_comment/{{ $x->uuid }}"
+                    href="/comment/{{ $x->uuid }}"
                 >
                     <img src="/img/comment.png" width="22px" height="22px" />
                 </a>
@@ -140,7 +140,7 @@
             </div>
 
             <!-- post comment -->
-            <a class="text-decoration-none" href="/post_comment/{{ $x->uuid }}">
+            <a class="text-decoration-none" href="/comment/{{ $x->uuid }}">
                 <div class="post_comment px-3 pt-1">
                 view all {{ $x->comment_count }} comments
                 </div>
