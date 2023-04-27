@@ -47,12 +47,20 @@ Route::get('/comment/{uuid_post}', [PostController::class, 'list_comment']);
 Route::post('/comment/', [PostController::class, 'comment_save']);
 Route::get('/delete_comment/{uuid_comment}', [PostController::class, 'delete_comment']);
 
+
+
 // SearchController
 Route::get('/search_feed/', [SearchController::class, 'search_feed']);
 Route::get('/searchx/', [SearchController::class, 'search']);
 Route::post('/search_post/', [SearchController::class, 'search_post']);
 
+
+
 // ProfilController
+Route::get('/user/{uuid_user}', [ProfilController::class, 'user']);
+Route::get('/follow/{uuid_user}', [ProfilController::class, 'follow']);
+Route::get('/unfollow/{uuid_user}', [ProfilController::class, 'unfollow']);
+
 Route::get('/profile/', [ProfilController::class, 'profile']);
 Route::get('/setting/', [ProfilController::class, 'setting']);
 Route::post('/save_setting/', [ProfilController::class, 'save_setting']);
