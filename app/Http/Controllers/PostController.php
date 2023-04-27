@@ -22,23 +22,36 @@ class PostController extends Controller
         // end profil querry
 
         // data querry
-        $data = DB::table('post')
-                    ->select('post.uuid', 'post.user', 'post.image', 'post.caption', 'post.ts',
-                            DB::raw('MAX(user.username) as username'),
-                            DB::raw('MAX(user.image) as user_image'),
-                            DB::raw("IF(MAX(likes.post) IS NULL, 'love.png', 'lovex.png') AS likex"),
-                            DB::raw("COUNT(DISTINCT likes.user) AS like_count"),
-                            DB::raw("COUNT(DISTINCT comment.uuid) AS comment_count"),
-                            DB::raw("IF(MAX(saved.post) IS NULL, 'saved.png', 'unsaved.png') AS saved_status"))
-                    ->join('user', 'post.user', '=', 'user.uuid')
-                    ->leftJoin('likes', 'post.uuid', '=', 'likes.post')
-                    ->leftJoin('comment', 'post.uuid', '=', 'comment.post')
-                    ->leftJoin('saved', 'post.uuid', '=', 'saved.post')
-                    ->where('post.uuid', $uuid_post)
-                    ->groupBy('post.uuid', 'post.user', 'post.image', 'post.caption', 'post.ts')
-                    ->get();
+        $data = DB::select("SELECT post.uuid, post.user, post.image, post.caption, post.ts, user.username, user.image AS user_image, comment_count.comment_count, likes_count.likes_count,
+         CASE WHEN likes_user.user IS NOT NULL THEN 'lovex.png' ELSE 'love.png' END AS likex,
+          CASE WHEN saved_user.user IS NOT NULL THEN 'unsaved.png' ELSE 'saved.png' END AS saved_status
+        FROM post
+        JOIN user ON post.user = user.uuid
+        LEFT JOIN (
+          SELECT post, COUNT(*) AS comment_count
+          FROM comment
+          GROUP BY post
+        ) AS comment_count ON post.uuid = comment_count.post
+        LEFT JOIN (
+          SELECT post, COUNT(*) AS likes_count
+          FROM likes
+          GROUP BY post
+        ) AS likes_count ON post.uuid = likes_count.post
+        LEFT JOIN (
+          SELECT post, user
+          FROM likes
+          WHERE user = '$user_uuid'
+        ) AS likes_user ON post.uuid = likes_user.post
+        LEFT JOIN (
+          SELECT post, user
+          FROM saved
+          WHERE user = '$user_uuid'
+        ) AS saved_user ON post.uuid = saved_user.post
+        WHERE post.uuid = '$uuid_post'");
+
         // end data querry
 
+        // return $data;
         return view('post/post', [
             'data' => $data,
             'profil' => $profil,

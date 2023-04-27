@@ -37,7 +37,7 @@
   <body class="mx-auto">
     <!-- nav header -->
     <div class="d-flex justify-content-between py-2 px-3 nav my-auto">
-      <a class="text-decoration-none" href="/feed/">
+      <a class="text-decoration-none" href="/feedx/">
         <div class="logo_ig"></div>
       </a>
       <div class="d-flex justify-content-between my-auto">
@@ -70,17 +70,17 @@
         @foreach ($list_post as $x)
             <!-- post head -->
             <div class="d-flex justify-content-between p-3">
-                <a class="text-decoration-none" href="/user/?uuid={{ $x->user }}">
+                <a class="text-decoration-none" href="/user/{{ $x->user }}">
                 <div class="d-flex">
-                    <img class="user_img my-auto" src="/uploads/{{ $x->user_image }}" />
+                    <img class="user_img my-auto" src="/storage/uploads/{{ $x->user_image }}" />
                     <span class="user_username my-auto ms-2">{{ $x->username }}</span>
                 </div>
                 </a>
             </div>
 
             <!-- post img -->
-            <a class="text-decoration-none" href="/post_detail/?uuid={{ $x->uuid }}">
-                <img class="feed_img" src="/uploads/{{ $x->image }}" />
+            <a class="text-decoration-none" href="/post_detail/{{ $x->uuid }}">
+                <img class="feed_img" src="/storage/uploads/{{ $x->image }}" />
             </a>
 
             <!-- nav footer -->
@@ -98,7 +98,7 @@
 
                 <a
                     class="text-decoration-none me-3"
-                    href="/post_comment/?uuid={{ $x->uuid }}"
+                    href="/comment/{{ $x->uuid }}"
                 >
                     <img src="/img/comment.png" width="22px" height="22px" />
                 </a>
@@ -118,20 +118,20 @@
             </div>
 
             <!-- post likes -->
-            <a class="text-decoration-none" href="/post_like/?uuid={{ $x->uuid }}">
+            <a class="text-decoration-none" href="/post_like/{{ $x->uuid }}">
                 <div class="post_like px-3 pt-2">{{ $x->num_likes }} likes</div>
             </a>
 
             <!-- post caption -->
             <div class="post_caption px-3 pt-1">
-                <a class="text-decoration-none" href="/user/?uuid={{ $x->user }}">
+                <a class="text-decoration-none" href="/user/{{ $x->user }}">
                 <span class="post_caption_username">{{ $x->username }} </span></a
                 >
                 <span class="post_caption_body">{{ $x->caption }}</span>
             </div>
 
             <!-- post comment -->
-            <a class="text-decoration-none" href="/post_comment/?uuid={{ $x->uuid }}">
+            <a class="text-decoration-none" href="/comment/{{ $x->uuid }}">
                 <div class="post_comment px-3 pt-1">
                 view all {{ $x->num_comments }} comments
                 </div>
@@ -146,7 +146,7 @@
 
     <!-- nav footer -->
     <div class="d-flex justify-content-between py-2 px-4 footer my-auto">
-      <a class="text-decoration-none" href="/feed/">
+      <a class="text-decoration-none" href="/feedx/">
         <img src="/img/home_selected.png" width="24px" height="24px" />
       </a>
       <a class="text-decoration-none" href="/search_feed/">

@@ -53,6 +53,7 @@ class FeedController extends Controller
                 ->limit(1)
                 ->get();
 
+        // return $list_post;
         return view('feed/feed', [
             'list_post' => $list_post,
             'profil' => $profil,

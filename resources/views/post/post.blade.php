@@ -128,7 +128,7 @@
 
             <!-- post likes -->
             <a class="text-decoration-none" href="/list_like/{{ $x->uuid }}">
-                <div class="post_like px-3 pt-2">{{ $x->like_count }} likes</div>
+                <div class="post_like px-3 pt-2">{{ $x->likes_count }} likes</div>
             </a>
 
             <!-- post caption -->
