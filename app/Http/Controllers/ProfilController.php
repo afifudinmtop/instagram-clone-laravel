@@ -229,4 +229,29 @@ class ProfilController extends Controller
             'profil' => $profil
         ]);
     }
+
+    public function user_followers(Request $request, $uuid_user) {
+        $user_uuid = $request->session()->get('user_uuid');
+       
+        // profil querry
+        $profil = DB::table('user')
+                ->where('uuid', '=', $user_uuid)
+                ->limit(1)
+                ->get();
+        // end profil querry
+
+        // list_followers querry
+        $list_followers = DB::table('following')
+                            ->select('following.user', 'user.username', 'user.image', 'user.first_name', 'user.last_name')
+                            ->join('user', 'following.user', '=', 'user.uuid')
+                            ->where('following.following', $uuid_user)
+                            ->get();
+        // end list_followers querry
+
+        // return $list_followers;
+        return view('profil/user_followers', [
+            'list_followers' => $list_followers,
+            'profil' => $profil
+        ]);
+    }
 }

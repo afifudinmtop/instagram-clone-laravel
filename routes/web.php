@@ -66,3 +66,4 @@ Route::get('/setting/', [ProfilController::class, 'setting']);
 Route::post('/save_setting/', [ProfilController::class, 'save_setting']);
 
 Route::get('/user_following/{uuid_user}', [ProfilController::class, 'user_following']);
+Route::get('/user_followers/{uuid_user}', [ProfilController::class, 'user_followers']);
