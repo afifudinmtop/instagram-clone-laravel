@@ -201,7 +201,32 @@ class ProfilController extends Controller
             ->where('following', $uuid_user)
             ->delete();
         // delete db end
-        
+
         return back();
+    }
+
+    public function user_following(Request $request, $uuid_user) {
+        $user_uuid = $request->session()->get('user_uuid');
+       
+        // profil querry
+        $profil = DB::table('user')
+                ->where('uuid', '=', $user_uuid)
+                ->limit(1)
+                ->get();
+        // end profil querry
+
+        // list_following querry
+        $list_following = DB::table('following')
+                            ->select('following.following', 'user.username', 'user.image', 'user.first_name', 'user.last_name')
+                            ->join('user', 'following.following', '=', 'user.uuid')
+                            ->where('following.user', $uuid_user)
+                            ->get();
+        // end list_following querry
+
+        // return $list_following;
+        return view('profil/user_following', [
+            'list_following' => $list_following,
+            'profil' => $profil
+        ]);
     }
 }

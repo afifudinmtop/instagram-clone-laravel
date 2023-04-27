@@ -64,3 +64,5 @@ Route::get('/unfollow/{uuid_user}', [ProfilController::class, 'unfollow']);
 Route::get('/profile/', [ProfilController::class, 'profile']);
 Route::get('/setting/', [ProfilController::class, 'setting']);
 Route::post('/save_setting/', [ProfilController::class, 'save_setting']);
+
+Route::get('/user_following/{uuid_user}', [ProfilController::class, 'user_following']);
