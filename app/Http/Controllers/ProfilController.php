@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProfilController extends Controller
 {
@@ -56,5 +59,51 @@ class ProfilController extends Controller
             'jumlah_following' => $jumlah_following,
             'jumlah_followers' => $jumlah_followers
         ]);
+    }
+
+    public function setting(Request $request) {
+        $user_uuid = $request->session()->get('user_uuid');
+
+        // profil querry
+        $profil = DB::table('user')
+                ->where('uuid', '=', $user_uuid)
+                ->limit(1)
+                ->get();
+        // end profil querry
+
+        // return $profil;
+        return view('profil/setting', [
+            'profil' => $profil
+        ]);
+    }
+
+    public function save_setting(Request $request) {
+        $user_uuid = $request->session()->get('user_uuid');
+        $bio = $request->input('bio');
+
+        // kalau ada file
+        if ($request->file('file')) {
+            // compress then upload
+            $filename = uniqid() . '.jpg';
+            $img = Image::make($request->file('file'))->fit(370)->encode('jpg');
+            Storage::put('public/uploads/' . $filename, $img);
+
+            // save to database
+            DB::table('user')
+                ->where('uuid', $user_uuid)
+                ->update(['image' => $filename, 'bio' => $bio]);
+            // save to database end
+        }
+
+        // kalau tidak ada file
+        else {
+            // save to database
+            DB::table('user')
+                ->where('uuid', $user_uuid)
+                ->update(['bio' => $bio]);
+            // save to database end
+        }
+
+        return redirect('/profile/'); 
     }
 }

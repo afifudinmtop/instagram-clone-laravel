@@ -54,3 +54,5 @@ Route::post('/search_post/', [SearchController::class, 'search_post']);
 
 // ProfilController
 Route::get('/profile/', [ProfilController::class, 'profile']);
+Route::get('/setting/', [ProfilController::class, 'setting']);
+Route::post('/save_setting/', [ProfilController::class, 'save_setting']);

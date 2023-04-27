@@ -94,6 +94,6 @@ class FeedController extends Controller
         ]);
         // end insert
 
-        return redirect('/post_detail/?uuid='.$uuid_post);
+        return redirect('/post_detail/'.$uuid_post);
     }
 }
