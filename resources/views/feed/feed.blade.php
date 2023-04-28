@@ -33,6 +33,7 @@
     />
 
     <link rel="stylesheet" href="/feed/feed.css" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
   </head>
   <body class="mx-auto">
     <!-- nav header -->
@@ -166,6 +167,7 @@
     <script>
       // middleware likes
       function likes(uuid_post) {
+        let token = document.querySelector('meta[name="csrf-token"]').content;
         let data_upload = new FormData();
         data_upload.append("uuid_post", uuid_post);
 
@@ -180,6 +182,7 @@
             document.getElementById(`likes_${uuid_post}`).src = "/img/love.png";
           };
           xhttp.open("POST", "/dislike", true);
+          xhttp.setRequestHeader('X-CSRF-TOKEN', token);
           xhttp.send(data_upload);
         }
         // like
@@ -190,12 +193,14 @@
               "/img/lovex.png";
           };
           xhttp.open("POST", "/likes", true);
+          xhttp.setRequestHeader('X-CSRF-TOKEN', token);
           xhttp.send(data_upload);
         }
       }
 
       // middleware saved
       function saved(uuid_post) {
+        let token = document.querySelector('meta[name="csrf-token"]').content;
         let data_upload = new FormData();
         data_upload.append("uuid_post", uuid_post);
 
@@ -211,6 +216,7 @@
               "/img/saved.png";
           };
           xhttp.open("POST", "/unsaved", true);
+          xhttp.setRequestHeader('X-CSRF-TOKEN', token);
           xhttp.send(data_upload);
         }
         // saved
@@ -221,6 +227,7 @@
               "/img/unsaved.png";
           };
           xhttp.open("POST", "/saved", true);
+          xhttp.setRequestHeader('X-CSRF-TOKEN', token);
           xhttp.send(data_upload);
         }
       }
