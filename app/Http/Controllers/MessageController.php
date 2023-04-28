@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +26,31 @@ class MessageController extends Controller
 
     public function dm(Request $request, $uuid_target)
     {
+        function timeDifference($timestamp) {
+            $now = Carbon::now();
+            $targetTime = Carbon::parse($timestamp)->subHours(7); // Subtract 7 hours from the timestamp
+          
+            $diff = $now->diff($targetTime);
+          
+            $seconds = $diff->s;
+            $minutes = $diff->i;
+            $hours = $diff->h;
+            $days = $diff->d;
+            $weeks = floor($days / 7);
+          
+            if ($weeks > 0) {
+              return $weeks . " week" . ($weeks == 1 ? "" : "s") . " ago";
+            } elseif ($days > 0) {
+              return $days . " day" . ($days == 1 ? "" : "s") . " ago";
+            } elseif ($hours > 0) {
+              return $hours . " hour" . ($hours == 1 ? "" : "s") . " ago";
+            } elseif ($minutes > 0) {
+              return $minutes . " minute" . ($minutes == 1 ? "" : "s") . " ago";
+            } else {
+              return $seconds . " second" . ($seconds == 1 ? "" : "s") . " ago";
+            }
+        }
+
         $user_uuid = $request->session()->get('user_uuid');
 
         $chat = DB::select("
@@ -36,7 +62,13 @@ class MessageController extends Controller
         $target = DB::select("
             select * from user where uuid='${uuid_target}'
         ");
+
+        // Update the "ts" values in the data array
+        foreach ($chat as &$item) {
+            $item->ts = timeDifference($item->ts);
+        }
         
+        // return $chat;
         return view('chat/dm', [
             'chat' => $chat,
             'target' => $target
@@ -59,4 +91,7 @@ class MessageController extends Controller
         
         return back();
     }
+
+    
+      
 }
