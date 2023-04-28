@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +13,31 @@ class PostController extends Controller
 {
     public function post_detail(Request $request, $uuid_post)
     {
+        function timeDifference($timestamp) {
+            $now = Carbon::now();
+            $targetTime = Carbon::parse($timestamp)->subHours(7); // Subtract 7 hours from the timestamp
+          
+            $diff = $now->diff($targetTime);
+          
+            $seconds = $diff->s;
+            $minutes = $diff->i;
+            $hours = $diff->h;
+            $days = $diff->d;
+            $weeks = floor($days / 7);
+          
+            if ($weeks > 0) {
+              return $weeks . " week" . ($weeks == 1 ? "" : "s") . " ago";
+            } elseif ($days > 0) {
+              return $days . " day" . ($days == 1 ? "" : "s") . " ago";
+            } elseif ($hours > 0) {
+              return $hours . " hour" . ($hours == 1 ? "" : "s") . " ago";
+            } elseif ($minutes > 0) {
+              return $minutes . " minute" . ($minutes == 1 ? "" : "s") . " ago";
+            } else {
+              return $seconds . " second" . ($seconds == 1 ? "" : "s") . " ago";
+            }
+        }
+
         $user_uuid = $request->session()->get('user_uuid');
 
         // profil querry
@@ -50,6 +76,11 @@ class PostController extends Controller
         WHERE post.uuid = '$uuid_post'");
 
         // end data querry
+
+        // Update the "ts" values in the data array
+        foreach ($data as &$item) {
+            $item->ts = timeDifference($item->ts);
+        }
 
         // return $data;
         return view('post/post', [

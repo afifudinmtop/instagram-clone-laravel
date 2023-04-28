@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +13,31 @@ class FeedController extends Controller
 {
     public function feed(Request $request)
     {
+        function timeDifference($timestamp) {
+            $now = Carbon::now();
+            $targetTime = Carbon::parse($timestamp)->subHours(7); // Subtract 7 hours from the timestamp
+          
+            $diff = $now->diff($targetTime);
+          
+            $seconds = $diff->s;
+            $minutes = $diff->i;
+            $hours = $diff->h;
+            $days = $diff->d;
+            $weeks = floor($days / 7);
+          
+            if ($weeks > 0) {
+              return $weeks . " week" . ($weeks == 1 ? "" : "s") . " ago";
+            } elseif ($days > 0) {
+              return $days . " day" . ($days == 1 ? "" : "s") . " ago";
+            } elseif ($hours > 0) {
+              return $hours . " hour" . ($hours == 1 ? "" : "s") . " ago";
+            } elseif ($minutes > 0) {
+              return $minutes . " minute" . ($minutes == 1 ? "" : "s") . " ago";
+            } else {
+              return $seconds . " second" . ($seconds == 1 ? "" : "s") . " ago";
+            }
+        }
+
         $user_uuid = $request->session()->get('user_uuid');
         
         $list_post = DB::table('post')
@@ -52,8 +78,13 @@ class FeedController extends Controller
                 ->where('uuid', '=', $user_uuid)
                 ->limit(1)
                 ->get();
+        // find on db end
 
-        // return $list_post;
+        // Update the "ts" values in the data array
+        foreach ($list_post as &$item) {
+            $item->ts = timeDifference($item->ts);
+        }
+        
         return view('feed/feed', [
             'list_post' => $list_post,
             'profil' => $profil,
