@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\MessageController;
 
 // HomeController
 Route::get('/', [HomeController::class, 'landing'])->middleware('onlyGuest');
@@ -69,3 +70,10 @@ Route::get('/saved/', [ProfilController::class, 'saved']);
 
 Route::get('/user_following/{uuid_user}', [ProfilController::class, 'user_following']);
 Route::get('/user_followers/{uuid_user}', [ProfilController::class, 'user_followers']);
+
+
+
+// MessageController
+Route::get('/message/', [MessageController::class, 'message']);
+Route::get('/dm/{uuid_target}', [MessageController::class, 'dm']);
+Route::post('/send_dm/', [MessageController::class, 'send_dm']);
