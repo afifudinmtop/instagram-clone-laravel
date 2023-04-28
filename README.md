@@ -6,7 +6,7 @@ instagram clone using node.js as backend
 
 ```javascript
 $ git clone https://github.com/afifudinmtop/instagram-clone-laravel.git
-$ cd instagram-clone-nodejs
+$ cd instagram-clone-laravel
 $ npm install
 $ composer install
 $ php artisan storage:link
