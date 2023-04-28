@@ -1,6 +1,6 @@
-# instagram-clone-nodejs
+# instagram-clone-laravel
 
-instagram clone using node.js as backend
+instagram clone using laravel
 
 ## Installation
 
